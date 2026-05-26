@@ -1,0 +1,514 @@
+<!-- /* ══════════════════════════════════════════════════════════════════
+Explore What Type of Data is This? Activity
+Introduction to AI 2026
+Designed by Amanda Wilkerson, 2026
+For questions or feedback, contact Amanda at <amanda@rhinicorn.com>
+
+Copyright (C) <2026> <Amanda Wilkerson>
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or 
+  any later version.
+    
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program. If not, see https://www.gnu.org/licenses .
+════════════════════════════════════════════════════════════════════ */ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Explore: What Type of Data Is This?</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 12pt;
+    color: #222;
+    max-width: 7.5in;
+    margin: 0.75in auto;
+    line-height: 1.55;
+    background: #fff;
+  }
+  .course-header {
+    border-bottom: 3px solid #1A4731;
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+  .course-header p {
+    margin: 2px 0;
+    font-size: 10.5pt;
+    color: #444;
+  }
+  h1.main-title {
+    font-size: 18pt;
+    color: #1A4731;
+    margin-bottom: 4px;
+  }
+  h1.sub-title {
+    margin-top: 0;
+    font-size: 15pt;
+    color: #5B2D8E;
+  }
+  .badge {
+    display: inline-block;
+    background: #EAF3E8;
+    color: #1A4731;
+    font-size: 9pt;
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+  }
+  .intro-box {
+    background: #EAF3E8;
+    border-left: 4px solid #1A4731;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    font-size: 11pt;
+    border-radius: 0 6px 6px 0;
+  }
+  .intro-box p { margin: 6px 0; }
+  h2 {
+    font-size: 13pt;
+    color: #5B2D8E;
+    margin-top: 28px;
+    margin-bottom: 8px;
+  }
+  table.ref {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 11pt;
+    margin: 10px 0 24px 0;
+  }
+  table.ref th {
+    background: #1A4731;
+    color: #fff;
+    padding: 8px 14px;
+    text-align: left;
+    font-size: 10.5pt;
+  }
+  table.ref td {
+    border: 1px solid #b0d4bc;
+    padding: 8px 14px;
+    vertical-align: top;
+  }
+  table.ref tr:nth-child(even) td { background: #EAF3E8; }
+  .example-card {
+    border: 1px solid #b0d4bc;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    background: #fff;
+  }
+  .example-num {
+    font-size: 9pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1A4731;
+    margin-bottom: 5px;
+  }
+  .example-text {
+    font-size: 11pt;
+    margin: 0 0 14px 0;
+    line-height: 1.5;
+    color: #222;
+  }
+  .classify-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .classify-btn {
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .classify-btn.structured {
+    background: #EAF3E8;
+    color: #1A4731;
+    border-color: #1A4731;
+  }
+  .classify-btn.unstructured {
+    background: #F0E8F8;
+    color: #5B2D8E;
+    border-color: #5B2D8E;
+  }
+  .classify-btn.semistructured {
+    background: #FFF8EC;
+    color: #7A4800;
+    border-color: #C87D00;
+  }
+  .classify-btn.selected.structured {
+    background: #1A4731;
+    color: #fff;
+  }
+  .classify-btn.selected.unstructured {
+    background: #5B2D8E;
+    color: #fff;
+  }
+  .classify-btn.selected.semistructured {
+    background: #C87D00;
+    color: #fff;
+  }
+  .classify-btn:hover:not(.selected) {
+    opacity: 0.75;
+  }
+  .reveal-section {
+    margin-top: 32px;
+    text-align: center;
+  }
+  .reveal-all-btn {
+    background: #5B2D8E;
+    color: #F0E8F8;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 28px;
+    font-size: 11.5pt;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .reveal-all-btn:hover { background: #4a2275; }
+  .answer-key {
+    display: none;
+    margin-top: 24px;
+    border: 1px solid #b0d4bc;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .answer-key-header {
+    background: #1A4731;
+    color: #fff;
+    padding: 10px 18px;
+    font-size: 12pt;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+  }
+  .answer-key-body {
+    padding: 6px 0;
+  }
+  .answer-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px 18px;
+    border-bottom: 1px solid #e0ede4;
+    font-size: 11pt;
+  }
+  .answer-row:last-child { border-bottom: none; }
+  .answer-num {
+    font-weight: bold;
+    color: #1A4731;
+    min-width: 28px;
+    flex-shrink: 0;
+  }
+  .answer-tag {
+    display: inline-block;
+    font-size: 9pt;
+    font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 108px;
+    text-align: center;
+  }
+  .tag-structured { background: #1A4731; color: #fff; }
+  .tag-unstructured { background: #5B2D8E; color: #fff; }
+  .tag-semi { background: #C87D00; color: #fff; }
+  .answer-why { color: #333; line-height: 1.45; }
+  .footer {
+    margin-top: 36px;
+    font-size: 9pt;
+    color: #888;
+    text-align: center;
+    border-top: 1px solid #b0d4bc;
+    padding-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="course-header">
+  <p><strong>AI Essentials</strong></p>
+  <p>Module 3 &nbsp;|&nbsp; Non-Graded Exploration Activity</p>
+</div>
+
+<h1 class="main-title">Explore: What Type of Data Is This?</h1>
+<h1 class="sub-title">Quick Classification Practice</h1>
+<div class="badge">CLASSIFY &amp; COMPARE &nbsp;|&nbsp; NO SUBMISSION REQUIRED</div>
+
+<div class="intro-box">
+  <p><strong>Purpose:</strong> Before AI systems can learn from data, that data has to be understood and prepared. One of the first steps is recognizing what <em>type</em> of data you are working with, because structured, unstructured, and semi-structured data each require different handling. This exploration builds quick, confident data-type recognition.</p>
+  <p><strong>What to do:</strong> Read each of the 12 data examples below. For each one, click the button that best matches your classification. When you have worked through all of them, reveal the answer key at the bottom to compare your thinking.</p>
+</div>
+
+<h2>QUICK REFERENCE</h2>
+
+<table class="ref">
+  <tr>
+    <th>Data Type</th>
+    <th>What It Looks Like</th>
+    <th>Key Signal</th>
+  </tr>
+  <tr>
+    <td><strong>Structured</strong></td>
+    <td>Organized into rows and columns with a fixed schema; lives comfortably in a spreadsheet or relational database</td>
+    <td>Every record has the same fields in the same order</td>
+  </tr>
+  <tr>
+    <td><strong>Unstructured</strong></td>
+    <td>Free-form content with no predefined model; includes text documents, images, audio, and video</td>
+    <td>No consistent fields or tags a computer can directly query</td>
+  </tr>
+  <tr>
+    <td><strong>Semi-Structured</strong></td>
+    <td>Has some organizational markers (tags, keys, headers) but does not conform to a rigid table schema</td>
+    <td>Self-describing format like JSON, XML, or HTML</td>
+  </tr>
+</table>
+
+<h2>CLASSIFY EACH EXAMPLE</h2>
+
+<div class="example-card">
+  <div class="example-num">Example 1</div>
+  <p class="example-text">A hospital database table with columns for Patient ID, Visit Date, Blood Pressure, Heart Rate, and Temperature. Every patient visit adds one new row, and the columns never change.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 1)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 1)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 1)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 2</div>
+  <p class="example-text">A folder containing 400 MP3 recordings from a customer service call center. Each file is a phone conversation between a representative and a customer.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 2)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 2)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 2)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 3</div>
+  <p class="example-text">A JSON file that logs each online order. Every order has fields for order_id, customer_email, and timestamp, plus an "items" field that holds a variable-length list of products and quantities.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 3)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 3)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 3)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 4</div>
+  <p class="example-text">A stack of paper intake forms that patients completed by hand in a waiting room. The forms have been scanned and saved as image files (PNG).</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 4)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 4)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 4)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 5</div>
+  <p class="example-text">A spreadsheet tracking weekly employee attendance across three departments. Each row is one employee; columns represent each day of the work week, with values of "Present," "Absent," or "Remote."</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 5)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 5)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 5)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 6</div>
+  <p class="example-text">A collection of emails sent to a retailer's customer support inbox. Each message is written differently — varying length, tone, and topic — with no consistent fields or format.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 6)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 6)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 6)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 7</div>
+  <p class="example-text">An XML product catalog where every item is wrapped in consistent tags: &lt;name&gt;, &lt;price&gt;, &lt;category&gt;, and &lt;stock_count&gt;. Some items also include an optional &lt;description&gt; tag; others do not.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 7)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 7)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 7)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 8</div>
+  <p class="example-text">Handwritten clinical notes taken by a physician during a patient consultation. The notes include observations, impressions, and a treatment plan written in the physician's own words and shorthand.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 8)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 8)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 8)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 9</div>
+  <p class="example-text">A CSV file exported from a point-of-sale system. The file has a header row with column names (Date, Store, Item, Quantity, Unit Price, Total) followed by one row per transaction.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 9)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 9)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 9)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 10</div>
+  <p class="example-text">A dataset of social media posts. Each post contains free-form text written by a user, alongside system-generated metadata fields: username, timestamp, post ID, hashtags, and location tag.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 10)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 10)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 10)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 11</div>
+  <p class="example-text">A set of company web pages for a product catalog. Each page uses HTML tags to define a product title, a price, and a navigation menu, but the product descriptions are written as free-form paragraphs of varying length.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 11)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 11)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 11)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="example-card">
+  <div class="example-num">Example 12</div>
+  <p class="example-text">A relational database table in a retail inventory system. Columns include SKU, Product Name, Category, Unit Price, and Quantity on Hand. Every product record follows the exact same schema.</p>
+  <div class="classify-btns">
+    <button class="classify-btn structured" onclick="select(this, 12)">Structured</button>
+    <button class="classify-btn unstructured" onclick="select(this, 12)">Unstructured</button>
+    <button class="classify-btn semistructured" onclick="select(this, 12)">Semi-Structured</button>
+  </div>
+</div>
+
+<div class="reveal-section">
+  <button class="reveal-all-btn" onclick="revealKey(this)">Reveal Answer Key</button>
+
+  <div class="answer-key" id="answerKey">
+    <div class="answer-key-header">ANSWER KEY</div>
+    <div class="answer-key-body">
+
+      <div class="answer-row">
+        <span class="answer-num">1</span>
+        <span class="answer-tag tag-structured">Structured</span>
+        <span class="answer-why">Fixed columns, consistent rows, and a defined schema make this a textbook relational database table.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">2</span>
+        <span class="answer-tag tag-unstructured">Unstructured</span>
+        <span class="answer-why">Audio files contain no rows, columns, or tags. The spoken content cannot be directly queried without additional processing such as speech-to-text transcription.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">3</span>
+        <span class="answer-tag tag-semi">Semi-Structured</span>
+        <span class="answer-why">JSON uses key-value pairs to provide organization, but the variable-length "items" list means records do not all share the same flat structure required for a relational table.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">4</span>
+        <span class="answer-tag tag-unstructured">Unstructured</span>
+        <span class="answer-why">Scanning a paper form creates an image. The handwriting within it is not machine-readable; a computer sees pixels, not fields or values, until OCR or similar processing is applied.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">5</span>
+        <span class="answer-tag tag-structured">Structured</span>
+        <span class="answer-why">Every employee record occupies one row, and every column represents the same field across all rows. This uniform schema is the hallmark of structured data.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">6</span>
+        <span class="answer-tag tag-unstructured">Unstructured</span>
+        <span class="answer-why">Email body text is free-form prose. While email headers (To, From, Subject) have some structure, the actual message content has no consistent schema a system can parse or query directly.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">7</span>
+        <span class="answer-tag tag-semi">Semi-Structured</span>
+        <span class="answer-why">XML provides self-describing tags that organize the data, but the optional description tag means not every record is identical. This flexibility is characteristic of semi-structured formats.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">8</span>
+        <span class="answer-tag tag-unstructured">Unstructured</span>
+        <span class="answer-why">Handwritten narrative notes have no consistent structure. Each note reflects the individual clinician's style and contains free-form text that cannot be directly parsed without NLP.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">9</span>
+        <span class="answer-tag tag-structured">Structured</span>
+        <span class="answer-why">A CSV with a consistent header row and uniform columns is structured data. Every transaction record contains the same fields, making it easy to load into a database or analysis tool.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">10</span>
+        <span class="answer-tag tag-semi">Semi-Structured</span>
+        <span class="answer-why">The metadata fields (username, timestamp, hashtags) are consistent and machine-readable, but the post text itself is free-form. This mix of structured metadata and unstructured content is a defining feature of semi-structured data.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">11</span>
+        <span class="answer-tag tag-semi">Semi-Structured</span>
+        <span class="answer-why">HTML tags give the pages a defined skeleton (title, price, navigation), but the free-form description paragraphs mean the content does not conform to a fixed schema. HTML is a classic semi-structured format.</span>
+      </div>
+
+      <div class="answer-row">
+        <span class="answer-num">12</span>
+        <span class="answer-tag tag-structured">Structured</span>
+        <span class="answer-why">Relational database tables are the standard example of structured data. Every product record follows the exact same schema, with no optional or variable fields.</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  AI Essentials &nbsp;|&nbsp; Module 3 Exploration Activity &nbsp;|&nbsp; Non-Graded
+</div>
+
+<script>
+function select(btn, exNum) {
+  var card = btn.closest('.example-card');
+  var btns = card.querySelectorAll('.classify-btn');
+  btns.forEach(function(b) { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+}
+
+function revealKey(btn) {
+  var key = document.getElementById('answerKey');
+  if (key.style.display === 'block') {
+    key.style.display = 'none';
+    btn.textContent = 'Reveal Answer Key';
+  } else {
+    key.style.display = 'block';
+    btn.textContent = 'Hide Answer Key';
+  }
+}
+</script>
+
+</body>
+</html>
